@@ -15,6 +15,20 @@ let passport = require('passport');
 let UserModel = require('../models/users');
 let User = UserModel.User; // alias for User
 
+// define the contact model
+let contact = require('../models/contacts');
+
+
+// function  to check if the user is authorized
+function requireAuth(req, res, next) {
+  //check if the user is logged in
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+
 // global route variables
 let currentDate = new Date();
 currentDate = currentDate.toLocaleTimeString();
@@ -28,19 +42,11 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-// function  to check if the user is authorized
-function requireAuth(req, res, next) {
-  //check if the user is logged in
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
-  }
-  next();
-};
-
 /* GET home page. wildcard */
 router.get('/', (req, res, next) => {
     res.render('content/index', {
         title: 'Home',
+        displayName: req.user ? req.user.displayName : '',
         skills: "Web Developer &#x25CF; .NET Developer &#x25CF; Software Engineer",
         description: "I am a responsible, proactive, and fast-learning IT professional with over 2 years’ hands-on experience and strong educational background in Software Engineering, who is passionate about ambitious projects, robust development, and high-quality software"
     });
@@ -49,21 +55,24 @@ router.get('/', (req, res, next) => {
 /* GET about page. */
 router.get('/about', (req, res, next) => {
     res.render('content/about', {
-        title: 'About'
+        title: 'About',
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 
 /* GET projects page. */
 router.get('/projects', (req, res, next) => {
     res.render('content/projects', {
-        title: 'Projects'
+        title: 'Projects',
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 
 /* GET services page. */
 router.get('/services', (req, res, next) => {
     res.render('content/services', {
-        title: 'Services'
+        title: 'Services',
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 
@@ -71,7 +80,8 @@ router.get('/services', (req, res, next) => {
 router.get('/contact', (req, res, next) => {
     res.render('content/contact', {
         title: 'Contact',
-        messageSent: false
+        messageSent: false,
+        displayName: req.user ? req.user.displayName : ''
     });
 });
 
@@ -98,7 +108,8 @@ router.post('/contact', (req, res, next) => {
             res.render('content/contact', {
                 title: 'Contact',
                 messageSent: true,
-                error: true
+                error: true,
+        displayName: req.user ? req.user.displayName : ''
             })
         }
         // Email sent
@@ -106,7 +117,8 @@ router.post('/contact', (req, res, next) => {
             res.render('content/contact', {
                 title: 'Contact',
                 messageSent: true,
-                error: false
+                error: false,
+        displayName: req.user ? req.user.displayName : ''
             })
         }
     });
@@ -119,7 +131,8 @@ router.get('/login', (req, res, next) => {
     res.render('auth/login', {
       title: 'Login',
       messages: req.flash('loginMessage'),
-      contacts: ''
+      contacts: '',
+        displayName: req.user ? req.user.displayName : ''
     });
     return;
   } else {
@@ -131,7 +144,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/contacts',
   failureRedirect: '/login',
-  failureFlash: true
+  failureMessage: true
 }));
 
 // GET /register - render the register page
@@ -142,7 +155,8 @@ router.get('/register', (req, res, next) => {
     res.render('auth/register', {
       title: 'Registration',
       messages: req.flash('registrationMessage'),
-      contacts: ''
+      contacts: '',
+        displayName: req.user ? req.user.displayName : ''
       
     });
   }
@@ -154,19 +168,21 @@ router.post('/register', (req, res, next) => {
     new User({
       username: req.body.username,
       password: req.body.password,
-      email: req.body.email
+      email: req.body.email,
+      displayName: req.body.displayName
     }),
     req.body.password,
     (err) => {
       if (err) {
-        console.log('Error inserting new user');
+        console.log('Error inserting new user ' + err.name);
         if (err.name == 'UserExistsError') {
           req.flash('registrationMessage', 'Registration Error: User Already Exists!');
         }
         return res.render('auth/register', {
           title: 'Registration',
           contacts: '',
-          messages: req.flash('registrationMessage')
+          messages: req.flash('registrationMessage'),
+        displayName: req.user ? req.user.displayName : ''
         });
       }
       // if registration is successful

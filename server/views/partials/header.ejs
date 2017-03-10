@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"> <i class="fa fa-id-card" aria-hidden="true"></i> Tony Bogun's Portfolio</a>
+                <a class="navbar-brand" href="/"> <i class="fa fa-id-card" aria-hidden="true"></i> Tony Bogun's Portfolio</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,44 +44,80 @@
                         <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li><a href="/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li><a href="/contact"><i class="fa fa-envelope" aria-hidden="true"> </i> Contact</a></li>
                     <% } else if (title == "About") { %>
                         <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
                         <li class="active"><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li><a href="/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li><a href="/contact"> <i class="fa fa-envelope" aria-hidden="true"> </i> Contact</a></li>
                     <% } else if (title == "Projects") { %>
                         <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
                         <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li class="active"><a href="/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li><a href="/contact"> <i class="fa fa-envelope" aria-hidden="true"> </i> Contact</li></a></li>
                     <% } else if (title == "Services") { %>
                         <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
                         <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li><a href="/projects"> <i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li class="active"><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li><a href="/contact"><i class="fa fa-envelope" aria-hidden="true"> </i> Contact</a></li>
                     <% } else if (title == "Contact List") { %>
                         <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
                         <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li><a href="/projects"> <i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li class="active"><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li class="active"><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li><a href="/contact"><i class="fa fa-envelope" aria-hidden="true"> </i> Contact</a></li>
                     <% } else if (title == "Contact") { %>
                         <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
                         <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
                         <li><a href="/projects"> <i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
                         <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
-                        <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                         <li class="active"><a href="/contact"><i class="fa fa-envelope" aria-hidden="true"> </i> Contact</a></li>
+                    <% } else if (title == "Login") { %>
+                        <li><a href="/"> <i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
+                        <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
+                        <li><a href="/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
+                        <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
+                    <% } else if (title == "Registration") { %>
+                        <li><a href="/"> <i class="fa fa-home" aria-hidden="true"></i> Homepage</a></li>
+                        <li><a href="/about"><i class="fa fa-id-badge" aria-hidden="true"></i> About</a></li>
+                        <li><a href="/projects"><i class="fa fa-cogs" aria-hidden="true"></i> Projects</a></li>
+                        <li><a href="/services"><i class="fa fa-server" aria-hidden="true"></i> Services</a></li>
+                        <% if(displayName) { %>
+                            <li><a href="/contacts"><i class="fa fa-address-book-o" aria-hidden="true"></i> Contact List</a></li>
+                        <% } %>
                     <% } %>
+
+                    <% if(displayName) { %>
+                        <li class="navbar-text"><i class='fa fa-user'></i> Welcome, <%= displayName %> </li> 
+                        <li> <a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    <% } else {%>
+                        <li> <a href="/login"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <% } %>
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

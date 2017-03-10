@@ -10,6 +10,12 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
+let passport = require('passport');
+
+// define user model
+let UserModel = require('../models/users');
+let User = UserModel.User; // alias for User
+
 // define the contact model
 let contact = require('../models/contacts');
 
@@ -32,7 +38,8 @@ router.get('/', requireAuth, (req, res, next) => {
     } else {
       res.render('contacts/index', {
         title: 'Contact List',
-        contacts: contacts
+        contacts: contacts,
+        displayName: req.user ? req.user.displayName : ''
       });
     }
   });
@@ -44,7 +51,8 @@ router.get('/add', requireAuth, (req, res, next) => {
   // render an empty form to add a new contact
   res.render('contacts/details', {
     title: "Add a new contact",
-    contacts: ''
+    contacts: '',
+        displayName: req.user ? req.user.displayName : ''
   });
 
 });
@@ -85,7 +93,8 @@ router.get('/:id', requireAuth, (req, res, next) => {
         // render the contact details view
         res.render('contacts/details', {
           title: 'Contact Details',
-          contacts: contacts
+          contacts: contacts,
+        displayName: req.user ? req.user.displayName : ''
         });
       }
     });
