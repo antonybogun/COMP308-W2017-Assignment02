@@ -108,7 +108,25 @@ router.post('/:id', (req, res, next) => {
       res.redirect('/contacts');
     }
   });
+});
 
+// GET /delete - process the delete by contact id
+router.get('/delete/:id', (req, res, next) => {
+
+  // get a reference to the id from the url
+  let id = req.params.id;
+
+  contact.remove({
+    _id: id
+  }, (err) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      // refresh the contact list
+      res.redirect('/contacts');
+    }
+  });
 });
 
 module.exports = router;
