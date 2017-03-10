@@ -27,10 +27,11 @@ mongoose.connect(process.env.URI || config.URI);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log("Connected to MongoDB...");
+  console.log("DB  Connected to MongoDB...");
 });
 
 let index = require('./routes/index');
+let contacts = require('./routes/contacts');
 
 let app = express();
 
@@ -46,7 +47,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+// route redirects
 app.use('/', index);
+app.use('/contacts', contacts);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
