@@ -1,0 +1,25 @@
+<!--
+    File-name: index.ejs
+    Author's name: Tony Bogun   
+    Web-site name: antonybogun.herokuapp.com
+    File description: Contains content of Home page
+ -->
+
+<% include ../partials/header.ejs %>
+
+    <!-- CONTENT PAGE FOR HOME -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 text-center">
+                <img class="img-main" src="Assets/images/main-icon.png" alt="">
+                <span class="name">Tony Bogun's Portfolio</span>
+                <hr class="divider">
+                <span class="skills"><%- skills %></span>
+                <br/>
+                <p class="text-main">
+                    <%- description %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/footer.ejs %>

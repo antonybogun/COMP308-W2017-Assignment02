@@ -1,0 +1,56 @@
+<!--
+    File-name: contact.ejs
+    Author's name: Tony Bogun   
+    Web-site name: antonybogun.herokuapp.com
+    File description: Contains content of Contact page
+ -->
+<% include ../partials/header.ejs %>
+    <!-- CONTENT PAGE FOR CONTACT -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <form class="form-horizontal" action="/contact" method="post">
+                    <fieldset>
+                        <legend>If you have any questions, I would be happy to answer your messages <i class="fa fa-comments" aria-hidden="true"></i>                            </legend>
+                        <div class="form-group">
+                            <label for="inputName" class="col-md-2 control-label">Name</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="inputName" placeholder="Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" name="inputEmail" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="textArea" class="col-md-2 control-label">Message</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" name="inputMessage" placeholder="Message" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-10 col-lg-offset-2">
+                                <button type="reset" class="btn btn-default"><i class="fa fa-repeat" aria-hidden="true"></i> Clear</button>
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> Sent</button>
+                            </div>
+                        </div>
+                        <% if (messageSent) { %>
+                            <% if (error) { %>
+                                <!-- Error message-->
+                                <div class="alert alert-danger text-center" role="alert">
+                                    Something went wrong. Message was not sent. Please try again later
+                                </div>
+                                <% } else { %>
+                                    <!-- Success message -->
+                                    <div class="alert alert-success text-center" role="alert">
+                                        Thanks for your message. I'll get back to you shortly!
+                                    </div>
+                                    <% }} %>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/footer.ejs %>

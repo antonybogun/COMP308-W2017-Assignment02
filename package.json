@@ -1,0 +1,40 @@
+{
+  "name": "comp308-w2017-a02",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "morgan": "~1.7.0",
+    "nodemailer": "^3.0.2",
+    "serve-favicon": "~2.3.0"
+  },
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=3.5.0"
+  },
+  "description": "## Welcome to Assignment 2 - Tony Bogun's Portfolio with Contact List and Authentication",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonybogun/COMP308-W2017-Assignment02"
+  },
+  "keywords": [
+    "NodeJS",
+    "ExpressJS",
+    "EJS"
+  ],
+  "author": "Tony Bogun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonybogun/COMP308-W2017-Assignment02/issues"
+  },
+  "homepage": "https://github.com/antonybogun/COMP308-W2017-Assignment02#readme"
+}
