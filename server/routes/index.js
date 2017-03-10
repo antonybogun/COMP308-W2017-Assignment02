@@ -1,7 +1,7 @@
 /*
  *   File-name: index.js
  *   Author's name: Tony Bogun   
- *   Web-site name: antonybogun.herokuapp.com
+ *   Web-site name: antonybogun2.herokuapp.com
  *   File description: Handles routes to web-pages
  */
 
