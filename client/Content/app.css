@@ -87,3 +87,7 @@ footer .footer-below {
 .img-main {
     margin-bottom: 20px;
 }
+
+.table tbody>tr>td{
+    vertical-align: middle;
+}

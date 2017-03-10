@@ -29,4 +29,36 @@ router.get('/', (req, res, next) => {
   });
 });
 
+//  GET /add -  render the Contact Details page in order to add a new contact
+router.get('/add', (req, res, next) => {
+
+  // render an empty form to add a new book
+  res.render('contacts/details', {
+    title: "Add a new contact",
+    contacts: ''
+  });
+
+});
+
+// POST /add - process the Book Details page and create a new Book - CREATE
+router.post('/add', (req, res, next) => {
+
+  // create a new book object with attributes from form
+  let newContact = contact({
+    "Name": req.body.name,
+    "PhoneNumber": req.body.phoneNumber,
+    "Email": req.body.email
+  });
+
+// add a book document to the collection
+  contact.create(newContact, (err, contact) => {
+    if (err) {
+      console.log(err);
+      res.end(err);
+    } else {
+      res.redirect('/contacts');
+    }
+  });
+});
+
 module.exports = router;
