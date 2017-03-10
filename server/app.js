@@ -5,12 +5,30 @@
  *   File description: Contains express setup
  */
 
+// modules required for the project
 let express = require('express');
 let path = require('path'); // part of node.js core
 let favicon = require('serve-favicon');
 let logger = require('morgan');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
+
+
+// import "mongoose" - required for DB Access
+let mongoose = require('mongoose');
+
+// import URI from config
+let config = require('./config/db');
+
+// choosing connection string to mLab db if production, local db for development
+mongoose.connect(process.env.URI || config.URI);
+
+// connecting to db with error report if applicable
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log("Connected to MongoDB...");
+});
 
 let index = require('./routes/index');
 
