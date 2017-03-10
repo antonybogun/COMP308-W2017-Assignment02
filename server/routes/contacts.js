@@ -13,8 +13,17 @@ let mongoose = require('mongoose');
 // define the contact model
 let contact = require('../models/contacts');
 
+// function  to check if the user is authorized
+function requireAuth(req, res, next) {
+  //check if the user is logged in
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
 /* GET / - display contact list */
-router.get('/', (req, res, next) => {
+router.get('/', requireAuth, (req, res, next) => {
 
   // find all contacts in the contacts collection
   contact.find().sort({"Name":1}).find((err, contacts) => {
@@ -30,7 +39,7 @@ router.get('/', (req, res, next) => {
 });
 
 //  GET /add -  render the Contact Details page in order to add a new Contact
-router.get('/add', (req, res, next) => {
+router.get('/add', requireAuth, (req, res, next) => {
 
   // render an empty form to add a new contact
   res.render('contacts/details', {
@@ -41,7 +50,7 @@ router.get('/add', (req, res, next) => {
 });
 
 // POST /add - process the Contact Details page and create a new Contact
-router.post('/add', (req, res, next) => {
+router.post('/add', requireAuth, (req, res, next) => {
 
   // create a new contact object with attributes from form
   let newContact = contact({
@@ -62,7 +71,7 @@ router.post('/add', (req, res, next) => {
 });
 
 // GET / - the Contact Details page in order to edit an existing Contact
-router.get('/:id', (req, res, next) => {
+router.get('/:id', requireAuth, (req, res, next) => {
 
     // get a reference to the id from the url
     let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
@@ -83,7 +92,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 // POST / - process the information passed from the details form and update the document
-router.post('/:id', (req, res, next) => {
+router.post('/:id', requireAuth, (req, res, next) => {
 
   // get a reference to the id from the url
   let id = req.params.id;
@@ -99,7 +108,7 @@ router.post('/:id', (req, res, next) => {
   // update a contact in the collection
   contact.update({
     _id: id
-  }, updatedContact, (err) => {
+  }, updatedContact, requireAuth, (err) => {
     if (err) {
       console.log(err);
       res.end(err);
@@ -111,7 +120,7 @@ router.post('/:id', (req, res, next) => {
 });
 
 // GET /delete - process the delete by contact id
-router.get('/delete/:id', (req, res, next) => {
+router.get('/delete/:id', requireAuth, (req, res, next) => {
 
   // get a reference to the id from the url
   let id = req.params.id;

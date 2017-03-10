@@ -8,8 +8,14 @@
 let express = require('express');
 let nodemailer = require('nodemailer');
 let router = express.Router();
+let mongoose = require('mongoose');
+let passport = require('passport');
 
-// Global Route Variables
+// define user model
+let UserModel = require('../models/users');
+let User = UserModel.User; // alias for User
+
+// global route variables
 let currentDate = new Date();
 currentDate = currentDate.toLocaleTimeString();
 
@@ -21,6 +27,15 @@ let transporter = nodemailer.createTransport({
         pass: 'qwertyasdfgh'
     }
 });
+
+// function  to check if the user is authorized
+function requireAuth(req, res, next) {
+  //check if the user is logged in
+  if (!req.isAuthenticated()) {
+    return res.redirect('/login');
+  }
+  next();
+};
 
 /* GET home page. wildcard */
 router.get('/', (req, res, next) => {
@@ -97,5 +112,74 @@ router.post('/contact', (req, res, next) => {
     });
 });
 
+// GET /login - login page. 
+router.get('/login', (req, res, next) => {
+  // check to see if the user is already logged in
+  if (!req.user) {
+    res.render('auth/login', {
+      title: 'Login',
+      messages: req.flash('loginMessage'),
+      contacts: ''
+    });
+    return;
+  } else {
+    return res.redirect('/contacts');
+  }
+});
+
+// POST /login - process login page 
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/contacts',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+// GET /register - render the register page
+router.get('/register', (req, res, next) => {
+  // check if the user is already logged in
+  if (!req.user) {
+    //render the registration page
+    res.render('auth/register', {
+      title: 'Registration',
+      messages: req.flash('registrationMessage'),
+      contacts: ''
+      
+    });
+  }
+});
+
+//POST /register - process the registration of the user
+router.post('/register', (req, res, next) => {
+  User.register(
+    new User({
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email
+    }),
+    req.body.password,
+    (err) => {
+      if (err) {
+        console.log('Error inserting new user');
+        if (err.name == 'UserExistsError') {
+          req.flash('registrationMessage', 'Registration Error: User Already Exists!');
+        }
+        return res.render('auth/register', {
+          title: 'Registration',
+          contacts: '',
+          messages: req.flash('registrationMessage')
+        });
+      }
+      // if registration is successful
+      return passport.authenticate('local')(req, res, () => {
+        res.redirect('/contacts');
+      })
+    });
+});
+
+//GET /logout  - logout user and redirect to the home page
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = router;
