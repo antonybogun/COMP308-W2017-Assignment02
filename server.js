@@ -11,7 +11,7 @@
  * Module dependencies.
  */
 
-let app = require('./app');
+let app = require('./server/app');
 let debug = require('debug')('comp308-w2017-a02:server');
 let http = require('http');
 
