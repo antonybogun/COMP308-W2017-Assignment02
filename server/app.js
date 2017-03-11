@@ -36,6 +36,7 @@ db.once('open', () => {
   console.log("DB  Connected to MongoDB...");
 });
 
+// import route files
 let index = require('./routes/index');
 let contacts = require('./routes/contacts');
 
@@ -45,7 +46,6 @@ let app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, '../client/Assets/favicon/', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -95,6 +95,5 @@ app.use(function (error, req, res, next) {
     displayName: req.user ? req.user.displayName : ''
   });
 });
-
 
 module.exports = app;

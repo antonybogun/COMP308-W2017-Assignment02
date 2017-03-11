@@ -7,7 +7,7 @@
 
 let mongoose = require('mongoose');
 
-// create a model class
+// create a model class for contacts
 let contactsSchema = mongoose.Schema({
   Name: String,
   PhoneNumber: String,
@@ -16,4 +16,5 @@ let contactsSchema = mongoose.Schema({
   collection: "contacts"
 });
 
+// export contactsSchema class to be available to import
 module.exports = mongoose.model('contacts', contactsSchema);

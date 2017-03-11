@@ -10,13 +10,14 @@ let express = require('express');
 let router = express.Router();
 let mongoose = require('mongoose');
 
+// module required for authentication
 let passport = require('passport');
 
 // define user model
 let UserModel = require('../models/users');
 let User = UserModel.User; // alias for User
 
-// define the contact model
+// define contact model
 let contact = require('../models/contacts');
 
 // function  to check if the user is authorized
@@ -32,7 +33,9 @@ function requireAuth(req, res, next) {
 router.get('/', requireAuth, (req, res, next) => {
 
   // find all contacts in the contacts collection
-  contact.find().sort({"Name":1}).find((err, contacts) => {
+  contact.find().sort({
+    "Name": 1
+  }).find((err, contacts) => {
     if (err) {
       return console.error(err);
     } else {
@@ -52,7 +55,7 @@ router.get('/add', requireAuth, (req, res, next) => {
   res.render('contacts/details', {
     title: "Add a new contact",
     contacts: '',
-        displayName: req.user ? req.user.displayName : ''
+    displayName: req.user ? req.user.displayName : ''
   });
 
 });
@@ -67,7 +70,7 @@ router.post('/add', requireAuth, (req, res, next) => {
     "Email": req.body.email
   });
 
-// add a contact document to the collection
+  // add a contact document to the collection
   contact.create(newContact, (err, contact) => {
     if (err) {
       console.log(err);
@@ -81,23 +84,23 @@ router.post('/add', requireAuth, (req, res, next) => {
 // GET / - the Contact Details page in order to edit an existing Contact
 router.get('/:id', requireAuth, (req, res, next) => {
 
-    // get a reference to the id from the url
-    let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
+  // get a reference to the id from the url
+  let id = mongoose.Types.ObjectId.createFromHexString(req.params.id);
 
-    // find one contact by its id
-    contact.findById(id, (err, contacts) => {
-      if (err) {
-        console.log(err);
-        res.end(error);
-      } else {
-        // render the contact details view
-        res.render('contacts/details', {
-          title: 'Contact Details',
-          contacts: contacts,
+  // find one contact by its id
+  contact.findById(id, (err, contacts) => {
+    if (err) {
+      console.log(err);
+      res.end(error);
+    } else {
+      // render the contact details view
+      res.render('contacts/details', {
+        title: 'Contact Details',
+        contacts: contacts,
         displayName: req.user ? req.user.displayName : ''
-        });
-      }
-    });
+      });
+    }
+  });
 });
 
 // POST / - process the information passed from the details form and update the document
@@ -134,6 +137,7 @@ router.get('/delete/:id', requireAuth, (req, res, next) => {
   // get a reference to the id from the url
   let id = req.params.id;
 
+  // delete contact if found by id
   contact.remove({
     _id: id
   }, (err) => {

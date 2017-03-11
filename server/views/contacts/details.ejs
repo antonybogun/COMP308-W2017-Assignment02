@@ -1,3 +1,10 @@
+<!--
+    File-name: details.ejs
+    Author's name: Tony Bogun   
+    Web-site name: antonybogun2.herokuapp.com
+    File description: Contains contact details page markup
+ -->
+
 <% include ../partials/header.ejs %>
 
   <!-- MAIN CONTENT -->
@@ -8,16 +15,19 @@
           <%= title %>
         </h1>
         <form class="form" method="post">
+
           <div class="form-group">
             <label for="NameTextField">Name</label>
             <input type="text" class="form-control" id="NameTextField" placeholder="Contact Name" name="name" value="<%= contacts.Name %>"
               required>
           </div>
+
           <div class="form-group">
             <label for="PhoneNumberTextField">Phone Number</label>
             <input type="text" class="form-control" id="PhoneNumberTextField" placeholder="Contact Phone Number" name="phoneNumber" value="<%= contacts.PhoneNumber %>"
               required>
           </div>
+
           <div class="form-group">
             <label for="EmailTextField">Email</label>
             <input type="text" class="form-control" id="EmailTextField" placeholder="Contact Email" name="email" value="<%= contacts.Email %>"

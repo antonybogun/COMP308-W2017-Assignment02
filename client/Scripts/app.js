@@ -5,7 +5,7 @@
  *   File description: Custom JS goes here
  */
 
-// IIFE
+// delete confirmation window implementation
 (function () {
     $(".btn-danger").click(function (event) {
         if (!confirm("Are you sure?")) {

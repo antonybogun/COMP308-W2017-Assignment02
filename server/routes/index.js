@@ -21,11 +21,11 @@ let contact = require('../models/contacts');
 
 // function  to check if the user is authorized
 function requireAuth(req, res, next) {
-  //check if the user is logged in
-  if (!req.isAuthenticated()) {
-    return res.redirect('/login');
-  }
-  next();
+    //check if the user is logged in
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login');
+    }
+    next();
 };
 
 
@@ -109,7 +109,7 @@ router.post('/contact', (req, res, next) => {
                 title: 'Contact',
                 messageSent: true,
                 error: true,
-        displayName: req.user ? req.user.displayName : ''
+                displayName: req.user ? req.user.displayName : ''
             })
         }
         // Email sent
@@ -118,7 +118,7 @@ router.post('/contact', (req, res, next) => {
                 title: 'Contact',
                 messageSent: true,
                 error: false,
-        displayName: req.user ? req.user.displayName : ''
+                displayName: req.user ? req.user.displayName : ''
             })
         }
     });
@@ -126,76 +126,76 @@ router.post('/contact', (req, res, next) => {
 
 // GET /login - login page. 
 router.get('/login', (req, res, next) => {
-  // check to see if the user is already logged in
-  if (!req.user) {
-    res.render('auth/login', {
-      title: 'Login',
-      messages: req.flash('loginMessage'),
-      contacts: '',
-        displayName: req.user ? req.user.displayName : ''
-    });
-    return;
-  } else {
-    return res.redirect('/contacts');
-  }
+    // check to see if the user is already logged in
+    if (!req.user) {
+        res.render('auth/login', {
+            title: 'Login',
+            messages: req.flash('loginMessage'),
+            contacts: '',
+            displayName: req.user ? req.user.displayName : ''
+        });
+        return;
+    } else {
+        return res.redirect('/contacts');
+    }
 });
 
 // POST /login - process login page 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/contacts',
-  failureRedirect: '/login',
-  failureMessage: true
+    successRedirect: '/contacts',
+    failureRedirect: '/login',
+    failureMessage: true
 }));
 
 // GET /register - render the register page
 router.get('/register', (req, res, next) => {
-  // check if the user is already logged in
-  if (!req.user) {
-    //render the registration page
-    res.render('auth/register', {
-      title: 'Registration',
-      messages: req.flash('registrationMessage'),
-      contacts: '',
-        displayName: req.user ? req.user.displayName : ''
-      
-    });
-  }
+    // check if the user is already logged in
+    if (!req.user) {
+        //render the registration page
+        res.render('auth/register', {
+            title: 'Registration',
+            messages: req.flash('registrationMessage'),
+            contacts: '',
+            displayName: req.user ? req.user.displayName : ''
+
+        });
+    }
 });
 
 //POST /register - process the registration of the user
 router.post('/register', (req, res, next) => {
-  User.register(
-    new User({
-      username: req.body.username,
-      password: req.body.password,
-      email: req.body.email,
-      displayName: req.body.displayName
-    }),
-    req.body.password,
-    (err) => {
-      if (err) {
-        console.log('Error inserting new user ' + err.name);
-        if (err.name == 'UserExistsError') {
-          req.flash('registrationMessage', 'Registration Error: User Already Exists!');
-        }
-        return res.render('auth/register', {
-          title: 'Registration',
-          contacts: '',
-          messages: req.flash('registrationMessage'),
-        displayName: req.user ? req.user.displayName : ''
+    User.register(
+        new User({
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            displayName: req.body.displayName
+        }),
+        req.body.password,
+        (err) => {
+            if (err) {
+                console.log('Error inserting new user ' + err.name);
+                if (err.name == 'UserExistsError') {
+                    req.flash('registrationMessage', 'Registration Error: User Already Exists!');
+                }
+                return res.render('auth/register', {
+                    title: 'Registration',
+                    contacts: '',
+                    messages: req.flash('registrationMessage'),
+                    displayName: req.user ? req.user.displayName : ''
+                });
+            }
+            // if registration is successful
+            return passport.authenticate('local')(req, res, () => {
+                res.redirect('/contacts');
+            })
         });
-      }
-      // if registration is successful
-      return passport.authenticate('local')(req, res, () => {
-        res.redirect('/contacts');
-      })
-    });
 });
 
 //GET /logout  - logout user and redirect to the home page
 router.get('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
+    req.logout();
+    res.redirect('/');
 });
 
 module.exports = router;

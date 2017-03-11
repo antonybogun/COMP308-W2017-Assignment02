@@ -1,6 +1,15 @@
+<!--
+    File-name: login.ejs
+    Author's name: Tony Bogun   
+    Web-site name: antonybogun2.herokuapp.com
+    File description: Contains login page markup
+ -->
+
 <% include ../partials/header.ejs %>
 
+    <!-- Render the Login form  -->
     <main class="container">
+        <!-- Display flash messages  -->
         <% if (messages.length > 0) { %>
             <div class="alert alert-danger">
                 <%= messages %>

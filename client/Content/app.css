@@ -67,6 +67,8 @@ footer .footer-below {
 
 /* footer  for website ends */
 
+/* customization start */
+
 .name {
     display: block;
     font-weight: 900;
@@ -91,3 +93,5 @@ footer .footer-below {
 .table tbody>tr>td{
     vertical-align: middle;
 }
+
+/* customization ends */
