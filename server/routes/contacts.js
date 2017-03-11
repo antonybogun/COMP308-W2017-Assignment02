@@ -117,7 +117,7 @@ router.post('/:id', requireAuth, (req, res, next) => {
   // update a contact in the collection
   contact.update({
     _id: id
-  }, updatedContact, requireAuth, (err) => {
+  }, updatedContact, (err) => {
     if (err) {
       console.log(err);
       res.end(err);
